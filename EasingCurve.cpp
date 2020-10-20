@@ -7,7 +7,7 @@
 using namespace std;
 
 EasingCurve::EasingCurve(unique_ptr<EasingCurveFunction> function)
-    : function_(move(function))
+    : function_{ move(function) }
 {
 }
 
