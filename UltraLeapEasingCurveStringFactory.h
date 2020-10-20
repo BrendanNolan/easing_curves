@@ -10,10 +10,7 @@
 class UltraLeapEasingCurveStringFactory : public EasingCurveStringFactory
 {
 public:
-    explicit UltraLeapEasingCurveStringFactory(
-        const std::string& stringToParse);
-
-    EasingCurve create() const override;
+    EasingCurve create(const std::string& stringToParse) const override;
 };
 
 #endif // ULTRALEAPEASINGCURVESTRINGFACTORY_H
