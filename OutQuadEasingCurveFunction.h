@@ -7,6 +7,7 @@ class OutQuadEasingCurveFunction : public EasingCurveFunction
 {
 public:
     float operator()(float progress) const override;
+    std::unique_ptr<EasingCurveFunction> clone() const override;
 };
 
 #endif // OUTQUADEASINGCURVEFUNCTION_H
