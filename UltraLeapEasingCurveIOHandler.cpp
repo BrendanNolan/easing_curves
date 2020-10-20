@@ -1,5 +1,6 @@
 #include "UltraLeapEasingCurveIOHandler.h"
 
+#include <stdexcept>
 #include <string>
 #include <utility>
 
@@ -24,8 +25,46 @@ void UltraLeapEasingCurveIOHandler::run()
 
     auto& in = *inStream_;
     auto& out = *outStream_;
-    while (in && out && !in.eof())
+    while (!in.eof())
     {
-
+        const auto line = readNextValidLine();
+        if (!curve_.isValid())
+            return;
+        if (curveApplyPending_)
+            out << curve_.apply(stof(line));
+        else
+            out << line;
     }
+}
+
+string UltraLeapEasingCurveIOHandler::readNextValidLine()
+{
+    string line;
+    while (!(inStream_->eof()))
+    {
+        if (!*inStream_)
+        {
+            inStream_->clear();
+            continue;
+        }
+        
+        getline(*inStream_, line);
+        
+        try
+        {
+            stof(line);
+            curveApplyPending_ = true;
+            return line;
+        }
+        catch (const invalid_argument&)
+        {
+            auto curve = factory_->create(line);
+            if (!curve.isValid())
+                continue;
+            curve_ = curve;
+            curveApplyPending_ = false;
+            return line;
+        }
+    }
+    return {};
 }

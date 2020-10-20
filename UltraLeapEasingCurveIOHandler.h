@@ -5,7 +5,7 @@
 #include <memory>
 #include <ostream>
 
-#include "EasingCurveTextProvider.h"
+#include "EasingCurve.h"
 
 class EasingCurveStringFactory;
 
@@ -20,14 +20,15 @@ public:
     void run();
 
 private:
-    EasingCurve readNextCurve();
-    void writeCurve(const EasingCurve& curve);
+    std::string readNextValidLine();
 
 private:
     std::istream* inStream_ = nullptr;
     std::ostream* outStream_ = nullptr;
     std::shared_ptr<EasingCurveStringFactory> factory_;
-    EasingCurveTextProvider textProvider_;
+    EasingCurve curve_;
+
+    bool curveApplyPending_ = false;
 };
 
 #endif //ULTRALEAPEASINGCURVEIOHANDLER_H

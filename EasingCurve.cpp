@@ -2,8 +2,6 @@
 
 #include <utility>
 
-#include "EasingCurveFunction.h"
-
 using namespace std;
 
 EasingCurve::EasingCurve(unique_ptr<EasingCurveFunction> function)
@@ -11,8 +9,17 @@ EasingCurve::EasingCurve(unique_ptr<EasingCurveFunction> function)
 {
 }
 
-EasingCurve::~EasingCurve()
+EasingCurve::EasingCurve(const EasingCurve& other)
 {
+    if (other.function_)
+        function_ = other.function_->clone();
+}
+
+EasingCurve& EasingCurve::operator=(const EasingCurve & other)
+{
+    if (other.function_)
+        function_ = other.function_->clone();
+    return *this;
 }
 
 float EasingCurve::apply(float progress) const

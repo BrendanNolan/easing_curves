@@ -3,12 +3,15 @@
 
 #include <memory>
 
-class EasingCurveFunction;
+#include "EasingCurveFunction.h"
 
 class EasingCurve
 {
+public:
+    EasingCurve() = default;
     explicit EasingCurve(std::unique_ptr<EasingCurveFunction> function);
-    ~EasingCurve();
+    EasingCurve(const EasingCurve& other);
+    EasingCurve& operator=(const EasingCurve& other);
 
     float apply(float progress) const; // Will throw if isValid() == false
     
