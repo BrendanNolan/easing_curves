@@ -11,11 +11,3 @@ TEMPLATE = app
 HEADERS += *.h
 
 SOURCES += *.cpp
-
-
-HEADERS += \
-    EasingCurveFunction.h
-
-
-SOURCES += \
-    EasingCurveFunction.cpp
