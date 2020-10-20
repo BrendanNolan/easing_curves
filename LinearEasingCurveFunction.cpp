@@ -1,8 +1,18 @@
 #include "LinearEasingCurveFunction.h"
 
-float LinearEasingCurveFunction::operator()(float progress) const
+LinearEasingCurveFunction::LinearEasingCurveFunction(
+    int xt0, 
+    int xtmax, 
+    float duration)
+    : xt0_{ xt0 }
+    , xtmax_{ xtmax }
+    , duration_{ duration }
 {
-    return 0.0f;
+}
+
+float LinearEasingCurveFunction::operator()(float t) const
+{
+    return xt0_ + t * (xtmax_ - xt0_) / duration_;
 }
 
 std::unique_ptr<EasingCurveFunction> LinearEasingCurveFunction::clone() const

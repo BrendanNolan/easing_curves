@@ -8,8 +8,19 @@
 class LinearEasingCurveFunction : public EasingCurveFunction
 {
 public:
-    float operator()(float progress) const override;
+    LinearEasingCurveFunction(
+        int xt0, 
+        int xtmax, 
+        float duration);
+
+    float operator()(float t) const override;
+    
     std::unique_ptr<EasingCurveFunction> clone() const override;
+
+private:
+    int xt0_ = 0;
+    int xtmax_ = 0; 
+    float duration_= 0.0;
 };
 
 #endif // LINEAREASINGCURVEFUNCTION_H
