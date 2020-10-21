@@ -51,6 +51,9 @@ EasingCurve UltraLeapEasingCurveStringFactory::create(
     const auto xt0 = parseXt0(components[1]);
     const auto xtmax = parseXtmax(components[2]);
     const auto duration = parseDuration(components[3]);
+    if (xt0 < 0 || xtmax < xt0 || duration < 0.0)
+        failed_ = true;
+
     if (failed_)
         return {};
 
@@ -58,34 +61,34 @@ EasingCurve UltraLeapEasingCurveStringFactory::create(
     if (firstComponent == "Linear")
     {
         return EasingCurve{
-            make_unique<LinearEasingCurveFunction>(
-                xt0,
-                xtmax,
-                duration)};
+            make_unique<LinearEasingCurveFunction>(),
+            xt0,
+            xtmax,
+            duration};
     }
     else if (firstComponent == "InQuad")
     {
         return EasingCurve{
-            make_unique<InQuadEasingCurveFunction>(
-                xt0,
-                xtmax,
-                duration)};
+            make_unique<InQuadEasingCurveFunction>(),
+            xt0,
+            xtmax,
+            duration};
     }
     else if (firstComponent == "OutQuad")
     {
         return EasingCurve{
-            make_unique<OutQuadEasingCurveFunction>(
-                xt0,
-                xtmax,
-                duration)};
+            make_unique<OutQuadEasingCurveFunction>(),
+            xt0,
+            xtmax,
+            duration};
     }
     else if (firstComponent == "InOutQuad")
     {
         return EasingCurve{
-            make_unique<InOutQuadEasingCurveFunction>(
-                xt0,
-                xtmax,
-                duration)};
+            make_unique<InOutQuadEasingCurveFunction>(),
+            xt0,
+            xtmax,
+            duration};
     }
     else
     {

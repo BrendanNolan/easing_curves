@@ -9,7 +9,11 @@ class EasingCurve
 {
 public:
     EasingCurve() = default;
-    explicit EasingCurve(std::unique_ptr<EasingCurveFunction> function);
+    EasingCurve(
+        std::unique_ptr<EasingCurveFunction> function,
+        int xt0,
+        int xtmax,
+        float duration);
     EasingCurve(const EasingCurve& other);
     EasingCurve& operator=(const EasingCurve& other);
 
@@ -21,6 +25,9 @@ public:
 
 private:
     std::unique_ptr<EasingCurveFunction> function_;
+    int xt0_ = 0;
+    int xtmax_ = 0;
+    float duration_ = 0.0f;
 };
 
 #endif // EASING_CURVE_H

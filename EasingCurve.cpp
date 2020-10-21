@@ -4,12 +4,22 @@
 
 using namespace std;
 
-EasingCurve::EasingCurve(unique_ptr<EasingCurveFunction> function)
+EasingCurve::EasingCurve(
+    unique_ptr<EasingCurveFunction> function,
+    int xt0,
+    int xtmax,
+    float duration)
     : function_{ move(function) }
+    , xt0_{xt0}
+    , xtmax_{xtmax}
+    , duration_{duration}
 {
 }
 
 EasingCurve::EasingCurve(const EasingCurve& other)
+    : xt0_{other.xt0_}
+    , xtmax_{other.xtmax_}
+    , duration_{other.duration_}
 {
     if (other.function_)
         function_ = other.function_->clone();
@@ -19,13 +29,17 @@ EasingCurve& EasingCurve::operator=(const EasingCurve & other)
 {
     if (other.function_)
         function_ = other.function_->clone();
+    xt0_ = other.xt0_;
+    xtmax_ = other.xtmax_;
+    duration_ = other.duration_;
+    
     return *this;
 }
 
 float EasingCurve::apply(float progress) const
 {
     const auto& f = *function_;
-    return f(progress);
+    return xt0_ +  f(progress / duration_) * xtmax_;
 }
 
 void EasingCurve::setFunction(unique_ptr<EasingCurveFunction> function)
