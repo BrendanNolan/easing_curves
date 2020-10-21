@@ -29,11 +29,11 @@ void UltraLeapEasingCurveIOHandler::run()
     {
         const auto line = readNextValidLine();
         if (!curve_.isValid())
-            return;
+            continue;
         if (curveApplyPending_)
-            out << curve_.apply(stof(line));
+            out << curve_.apply(stof(line)) << endl;
         else
-            out << line;
+            out << line << endl;
     }
 }
 
@@ -49,7 +49,7 @@ string UltraLeapEasingCurveIOHandler::readNextValidLine()
         }
         
         getline(*inStream_, line);
-        
+
         try
         {
             stof(line);

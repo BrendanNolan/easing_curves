@@ -8,6 +8,7 @@
 class EasingCurveStringFactory
 {
 public:
+    virtual ~EasingCurveStringFactory() = default;
     virtual EasingCurve create(const std::string& stringToParse) = 0;
 };
 

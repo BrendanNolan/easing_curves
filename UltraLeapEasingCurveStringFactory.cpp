@@ -43,7 +43,7 @@ EasingCurve UltraLeapEasingCurveStringFactory::create(
     {
         if (s.eof())
             return {};
-        getline(s, components[i]);
+        getline(s, components[i], ',');
     }
     if (!s.eof())
         return {};
