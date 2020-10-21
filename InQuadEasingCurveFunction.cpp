@@ -1,8 +1,8 @@
 #include "InQuadEasingCurveFunction.h"
 
-float InQuadEasingCurveFunction::operator()(float progress) const
+float InQuadEasingCurveFunction::operator()(float t) const
 {
-    return 0.0f;
+    return t * t;
 }
 
 std::unique_ptr<EasingCurveFunction> InQuadEasingCurveFunction::clone() const

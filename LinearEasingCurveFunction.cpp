@@ -2,7 +2,7 @@
 
 float LinearEasingCurveFunction::operator()(float t) const
 {
-    return t * t;
+    return t;
 }
 
 std::unique_ptr<EasingCurveFunction> LinearEasingCurveFunction::clone() const

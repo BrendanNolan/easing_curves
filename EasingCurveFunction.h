@@ -7,7 +7,7 @@ class EasingCurveFunction
 {
 public:
     virtual ~EasingCurveFunction() = default;
-    virtual float operator()(float progress) const = 0;
+    virtual float operator()(float t) const = 0;
     virtual std::unique_ptr<EasingCurveFunction> clone() const = 0;
 };
 

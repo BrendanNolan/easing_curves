@@ -6,7 +6,7 @@
 class InOutQuadEasingCurveFunction : public EasingCurveFunction
 {
 public:
-    float operator()(float progress) const override;
+    float operator()(float t) const override;
     std::unique_ptr<EasingCurveFunction> clone() const override;
 };
 
