@@ -31,9 +31,14 @@ void UltraLeapEasingCurveIOHandler::run()
         if (!curve_.isValid())
             continue;
         if (curveApplyPending_)
+        {
             out << curve_.apply(stof(line)) << endl;
+            curveApplyPending_ = false;
+        }
         else
+        {
             out << line << endl;
+        }
     }
 }
 
