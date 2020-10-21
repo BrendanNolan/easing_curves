@@ -20,7 +20,7 @@ public:
 private:
     int xt0_ = 0;
     int xtmax_ = 0; 
-    float duration_= 0.0;
+    float duration_= 0.0f;
 };
 
 #endif // LINEAREASINGCURVEFUNCTION_H

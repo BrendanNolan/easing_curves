@@ -1,5 +1,15 @@
 #include "InQuadEasingCurveFunction.h"
 
+InQuadEasingCurveFunction::InQuadEasingCurveFunction(
+    int xt0,
+    int xtmax,
+    float duration)
+    : xt0_{ xt0 }
+    , xtmax_{ xtmax }
+    , duration_{ duration }
+{
+}
+
 float InQuadEasingCurveFunction::operator()(float progress) const
 {
     return 0.0f;

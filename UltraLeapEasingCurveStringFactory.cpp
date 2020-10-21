@@ -1,5 +1,6 @@
 #include "UltraLeapEasingCurveStringFactory.h"
 
+#include <algorithm>
 #include <memory>
 #include <sstream>
 #include <stdexcept>
@@ -12,13 +13,30 @@
 
 using namespace std;
 
+namespace
+{
+void removeSpaces(string& s);
+bool startsWith(const std::string& target, const std::string& query);
+float getFloatFollowing(
+    const std::string& target, 
+    const std::string& preceedingFloat,
+    bool& ok);
+int getIntFollowing(
+    const std::string& target,
+    const std::string& preceedingInt,
+    bool& ok);
+}
+
 EasingCurve UltraLeapEasingCurveStringFactory::create(
     const std::string& stringToParse)
 {
     failed_ = false;
 
+    auto cpy = stringToParse;
+    removeSpaces(cpy);
+
     stringstream s;
-    s << stringToParse;
+    s << cpy;
 
     vector<string> components{4};
     for (auto i = 0u; i < 4; ++i)
@@ -39,96 +57,130 @@ EasingCurve UltraLeapEasingCurveStringFactory::create(
     const auto& firstComponent = components[0];
     if (firstComponent == "Linear")
     {
-        return EasingCurve(
+        return EasingCurve{
             make_unique<LinearEasingCurveFunction>(
-                xt0, 
+                xt0,
                 xtmax,
-                duration));
+                duration)};
     }
     else if (firstComponent == "InQuad")
     {
-        return EasingCurve(
+        return EasingCurve{
             make_unique<InQuadEasingCurveFunction>(
                 xt0,
                 xtmax,
-                duration));
+                duration)};
     }
     else if (firstComponent == "OutQuad")
     {
-        return EasingCurve(
+        return EasingCurve{
             make_unique<OutQuadEasingCurveFunction>(
                 xt0,
                 xtmax,
-                duration));
+                duration)};
     }
     else if (firstComponent == "InOutQuad")
     {
-        return EasingCurve(
+        return EasingCurve{
             make_unique<InOutQuadEasingCurveFunction>(
                 xt0,
                 xtmax,
-                duration));
+                duration)};
     }
     else
+    {
         return {};
+    }
 }
 
-int UltraLeapEasingCurveStringFactory::parseXt0(const std::string & s)
+int UltraLeapEasingCurveStringFactory::parseXt0(const std::string& s)
 {
-    const auto beginning = s.substr(0, 5);
-    if (beginning != "x_t0=")
+    auto ok = false;
+    const auto i = getIntFollowing(s, "x_t0=", ok);
+    if (!ok)
     {
         failed_ = true;
         return 0;
     }
-    const auto value = s.substr(5);
-    try
-    {
-        return stoi(value);
-    }
-    catch (const invalid_argument&)
-    {
-        failed_ = true;
-        return 0;
-    }
+    return i;
 }
 
 int UltraLeapEasingCurveStringFactory::parseXtmax(const std::string & s)
 {
-    const auto beginning = s.substr(0, 7);
-    if (beginning != "x_tmax=")
+    auto ok = false;
+    const auto i = getIntFollowing(s, "x_tmax=", ok);
+    if (!ok)
     {
         failed_ = true;
         return 0;
     }
-    const auto value = s.substr(7);
-    try
-    {
-        return stoi(value);
-    }
-    catch (const invalid_argument&)
-    {
-        failed_ = true;
-        return 0;
-    }
+    return i;
 }
 
 float UltraLeapEasingCurveStringFactory::parseDuration(const std::string & s)
 {
-    const auto beginning = s.substr(0, 9);
-    if (beginning != "duration=")
+    auto ok = false;
+    const auto f = getFloatFollowing(s, "duration=", ok);
+    if (!ok)
     {
         failed_ = true;
         return 0;
     }
-    const auto value = s.substr(9);
+    return f;
+}
+
+namespace
+{
+void removeSpaces(string& s)
+{
+    s.erase(
+        remove_if(
+            s.begin(),
+            s.end(),
+            [](char c) { return isspace(c); }),
+        s.end());
+}
+
+bool startsWith(const std::string& target, const std::string& query)
+{
+    return target.substr(0, query.size()) == query;
+}
+
+float getFloatFollowing(
+    const std::string& target,
+    const std::string& preceedingFloat,
+    bool& ok)
+{
+    if (!startsWith(target, preceedingFloat))
+    {
+        ok = false;
+        return 0.0f;
+    }
+
     try
     {
-        return stof(value);
+        const auto f = stof(target.substr(preceedingFloat.size()));
+        ok = true;
+        return f;
     }
-    catch (const invalid_argument&)
+    catch (const invalid_argument& )
     {
-        failed_ = true;
+        ok = false;
+        return 0.0f;
+    }
+}
+
+int getIntFollowing(
+    const std::string& target,
+    const std::string& preceedingInt,
+    bool& ok)
+{
+    const auto f = getFloatFollowing(target, preceedingInt, ok);
+    if (!ok || (ceil(f) != f))
+    {
+        ok = false;
         return 0;
     }
+    return static_cast<int>(f);
+}
 }
