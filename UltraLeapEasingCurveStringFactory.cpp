@@ -51,9 +51,6 @@ EasingCurve UltraLeapEasingCurveStringFactory::create(
     const auto xt0 = parseXt0(components[1]);
     const auto xtmax = parseXtmax(components[2]);
     const auto duration = parseDuration(components[3]);
-    if (xt0 < 0 || xtmax < xt0 || duration < 0.0)
-        failed_ = true;
-
     if (failed_)
         return {};
 
@@ -124,7 +121,7 @@ float UltraLeapEasingCurveStringFactory::parseDuration(const std::string & s)
 {
     auto ok = false;
     const auto f = getFloatFollowing(s, "duration=", ok);
-    if (!ok)
+    if (!ok || f < 0.0f)
     {
         failed_ = true;
         return 0;

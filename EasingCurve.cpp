@@ -50,6 +50,13 @@ void EasingCurve::setFunction(unique_ptr<EasingCurveFunction> function)
     function_ = move(function);
 }
 
+void EasingCurve::setParams(int xt0, int xtmax, float duration)
+{
+    xt0_ = xt0;
+    xtmax_ = xtmax;
+    duration_ = duration;
+}
+
 bool EasingCurve::isValid() const
 {
     return static_cast<bool>(function_);

@@ -21,6 +21,10 @@ public:
     float apply(float progress) const; 
     
     void setFunction(std::unique_ptr<EasingCurveFunction> function);
+    void setParams(
+        int xt0,
+        int xtmax,
+        float duration);
 
     bool isValid() const;
 

@@ -1,7 +1,10 @@
 #include "LinearEasingCurveFunction.h"
 
+#include <cassert>
+
 float LinearEasingCurveFunction::operator()(float t) const
 {
+    assert(t >= 0.0f && t <= 1.0f);
     return t;
 }
 
