@@ -38,6 +38,9 @@ EasingCurve& EasingCurve::operator=(const EasingCurve & other)
 
 float EasingCurve::apply(float progress) const
 {
+    if (!function_)
+        return 0.0f;
+
     const auto& f = *function_;
     return xt0_ +  f(progress / duration_) * (xtmax_ - xt0_);
 }

@@ -17,7 +17,7 @@ public:
     EasingCurve(const EasingCurve& other);
     EasingCurve& operator=(const EasingCurve& other);
 
-    float apply(float progress) const; // Will throw if isValid() == false
+    float apply(float progress) const; // Will produce nonsense if isValid() == false
     
     void setFunction(std::unique_ptr<EasingCurveFunction> function);
 
@@ -25,6 +25,7 @@ public:
 
 private:
     std::unique_ptr<EasingCurveFunction> function_;
+
     int xt0_ = 0;
     int xtmax_ = 0;
     float duration_ = 0.0f;
