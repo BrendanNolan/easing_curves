@@ -2,8 +2,6 @@
 
 #include <utility>
 
-#include "EasingCurveFunction.h"
-
 using namespace std;
 
 EasingCurve::~EasingCurve() = default;

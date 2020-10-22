@@ -3,7 +3,7 @@
 
 #include <memory>
 
-class EasingCurveFunction;
+#include "EasingCurveFunction.h"
 
 class EasingCurve
 {
