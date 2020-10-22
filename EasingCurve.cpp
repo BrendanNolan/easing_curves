@@ -6,9 +6,7 @@
 
 using namespace std;
 
-EasingCurve::~EasingCurve()
-{
-}
+EasingCurve::~EasingCurve() = default;
 
 EasingCurve::EasingCurve(
     unique_ptr<EasingCurveFunction> function,
