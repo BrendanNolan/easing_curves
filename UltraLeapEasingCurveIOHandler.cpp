@@ -4,6 +4,7 @@
 #include <string>
 #include <utility>
 
+#include "EasingCurveFunction.h"
 #include "EasingCurveStringFactory.h"
 
 using namespace std;
