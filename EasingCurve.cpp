@@ -2,7 +2,13 @@
 
 #include <utility>
 
+#include "EasingCurveFunction.h"
+
 using namespace std;
+
+EasingCurve::~EasingCurve()
+{
+}
 
 EasingCurve::EasingCurve(
     unique_ptr<EasingCurveFunction> function,
@@ -29,6 +35,24 @@ EasingCurve& EasingCurve::operator=(const EasingCurve & other)
 {
     if (other.function_)
         function_ = other.function_->clone();
+    xt0_ = other.xt0_;
+    xtmax_ = other.xtmax_;
+    duration_ = other.duration_;
+    
+    return *this;
+}
+
+EasingCurve::EasingCurve(EasingCurve&& other)
+    : function_{move(other.function_)}
+    , xt0_{ other.xt0_ }
+    , xtmax_{ other.xtmax_ }
+    , duration_{ other.duration_ }
+{
+}
+
+EasingCurve& EasingCurve::operator=(EasingCurve&& other)
+{
+    function_ = move(other.function_);
     xt0_ = other.xt0_;
     xtmax_ = other.xtmax_;
     duration_ = other.duration_;

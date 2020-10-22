@@ -66,7 +66,7 @@ string UltraLeapEasingCurveIOHandler::readNextValidLine()
             auto curve = factory_->create(line);
             if (!curve.isValid())
                 continue;
-            curve_ = curve;
+            curve_ = move(curve);
             curveApplyPending_ = false;
             return line;
         }
