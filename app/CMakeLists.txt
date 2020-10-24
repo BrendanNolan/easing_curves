@@ -3,7 +3,7 @@ project(app_proj)
 set(CMAKE_BUILD_TYPE Release)
  
 set ( PROJECT_LINK_LIBS libeasing_curves_core.a )
-link_directories( ../easing_curves_core/build )
+link_directories( ../build/easing_curves_core )
 
 include_directories(. ../easing_curves_core)
  
