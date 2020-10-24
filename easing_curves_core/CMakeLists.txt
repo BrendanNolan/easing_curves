@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.18.4)
-project(easing_curves_core)
+project(easing_curves_core_proj)
 set(CMAKE_BUILD_TYPE Release)
  
 include_directories(.)
