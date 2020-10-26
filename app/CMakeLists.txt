@@ -1,19 +1,18 @@
 cmake_minimum_required(VERSION 3.18.4)
 project(app_proj)
 set(CMAKE_BUILD_TYPE Release)
- 
-if (UNIX)
-    set ( PROJECT_LINK_LIBS libeasing_curves_core.a )
-endif (UNIX)
-if (MSVC)
-    set ( PROJECT_LINK_LIBS easing_curves_core.lib )
-endif (MSVC)
 
-link_directories( ${CMAKE_BINARY_DIR}/easing_curves_core )
+set_property(
+    TARGET easing_curves_core PROPERTY
+    IMPORTED_LOCATION "../easing_curves_core/libeasing_curves_core.a")
 
-include_directories(. ../easing_curves_core)
- 
 file(GLOB SOURCES "*.cpp")
- 
+
 add_executable(app ${SOURCES})
-target_link_libraries(app ${PROJECT_LINK_LIBS} )
+
+target_include_directories(app 
+    PRIVATE
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(app 
+    PRIVATE 
+        easing_curves_core)

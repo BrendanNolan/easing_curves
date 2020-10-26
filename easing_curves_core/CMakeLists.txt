@@ -2,8 +2,11 @@ cmake_minimum_required(VERSION 3.18.4)
 project(easing_curves_core_proj)
 set(CMAKE_BUILD_TYPE Release)
  
-include_directories(.)
- 
 file(GLOB SOURCES "*.cpp")
  
 add_library(easing_curves_core STATIC ${SOURCES})
+target_include_directories(easing_curves_core
+    PUBLIC
+        $<INSTALL_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+)
