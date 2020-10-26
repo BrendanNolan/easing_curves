@@ -7,6 +7,5 @@ file(GLOB SOURCES "*.cpp")
 add_library(easing_curves_core STATIC ${SOURCES})
 target_include_directories(easing_curves_core
     PUBLIC
-        $<INSTALL_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )
