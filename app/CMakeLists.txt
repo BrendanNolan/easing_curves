@@ -6,9 +6,5 @@ file(GLOB SOURCES "*.cpp")
 
 add_executable(app ${SOURCES})
 
-target_include_directories(app 
-    PRIVATE
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(app 
-    PRIVATE 
-        easing_curves_core)
+target_include_directories(app PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(app PRIVATE easing_curves_core)

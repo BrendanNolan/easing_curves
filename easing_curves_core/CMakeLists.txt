@@ -5,7 +5,4 @@ set(CMAKE_BUILD_TYPE Release)
 file(GLOB SOURCES "*.cpp")
  
 add_library(easing_curves_core STATIC ${SOURCES})
-target_include_directories(easing_curves_core
-    PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-)
+target_include_directories(easing_curves_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
